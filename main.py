@@ -17,7 +17,7 @@ async def provide_insights(request: Request):
     slack_request_ts = request.headers.get("x-slack-request-timestamp")
     slack_signature = request.headers.get("x-slack-signature")
 
-    if not slack_request_ts or not slack_signature:
+    if not slack_signing_secret or not slack_request_ts or not slack_signature:
         raise HTTPException(status_code=500, detail="Fuck off")
 
     if int(time.time()) - int(slack_request_ts) > 60:
