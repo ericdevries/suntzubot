@@ -1,10 +1,11 @@
-from typing import Optional
-import hmac
 import hashlib
-import time
-
+import hmac
+import os
 import random
-from fastapi import FastAPI, Request, Form, HTTPException
+import time
+from typing import Optional
+
+from fastapi import FastAPI, Form, HTTPException, Request
 
 
 app = FastAPI()
@@ -12,7 +13,7 @@ app = FastAPI()
 
 @app.post("/")
 async def provide_insights(request: Request):
-    slack_signing_secret = "f306f8ffb38ea8c7d0a800f8c00b5637"
+    slack_signing_secret = os.getenv("SLACK_SIGNING_SECRET", "")
     slack_request_ts = request.headers.get("x-slack-request-timestamp")
     slack_signature = request.headers.get("x-slack-signature")
 
