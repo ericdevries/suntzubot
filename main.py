@@ -11,6 +11,11 @@ from fastapi import FastAPI, Form, HTTPException, Request
 app = FastAPI()
 
 
+@app.get("/")
+def status():
+    return "OK"
+
+
 @app.post("/")
 async def provide_insights(request: Request):
     slack_signing_secret = os.getenv("SLACK_SIGNING_SECRET", "")
